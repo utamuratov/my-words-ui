@@ -1,0 +1,43 @@
+// Custom Theming for NG-ZORRO
+// For more information: https://ng.ant.design/docs/customize-theme/en
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+// Override less variables to here
+// View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+
+// @body-background: #E5E5E5;
+@primary-color: #3445df;
+@border-radius-base: 9px;
+
+@btn-border-radius-base: 9px;
+@btn-shadow: 0px 7px 15px rgba(108, 122, 250, 0.3),
+  0px 2px 4px rgba(0, 11, 112, 0.1);
+// @btn-height-base: 40px;
+// @btn-height-lg: 44px;
+// @btn-font-size-lg: 17px;
+
+@input-height-base: 40px;
+
+@checkbox-border-radius: 4px;
+
+@collapse-header-bg: #fff;
+
+@label-color: @primary-color;
+
+// @modal-header-border-width: 0;
+
+// @import "./assets/fonts/Mazzard/stylesheet.less";
+@font-face {
+  font-family: "Mazzard M";
+  src: url("./assets/fonts/Mazzard/MazzardM-Medium.eot");
+  src: local("Mazzard M Medium"), local("MazzardM-Medium"),
+    url("./assets/fonts/Mazzard/MazzardM-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/Mazzard/MazzardM-Medium.woff2") format("woff2"),
+    url("./assets/fonts/Mazzard/MazzardM-Medium.woff") format("woff"),
+    url("./assets/fonts/Mazzard/MazzardM-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-family: Mazzard M;

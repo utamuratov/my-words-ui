@@ -1,0 +1,116 @@
+.header {
+  display: flex;
+  h3 {
+    flex-grow: 1;
+  }
+}
+
+.body {
+  flex-grow: 1;
+  overflow-y: scroll;
+  /* Add the ability to scroll y axis*/
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.when {
+  background: #3445df;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #ffffff;
+  padding: 3px 13px;
+}
+
+.word {
+  background-color: #fff;
+  padding: 13px 15px;
+  margin-top: 8px;
+  font-size: 16px;
+  border: 1px solid #e6e9eb;
+  border-radius: 9px;
+  transition: 2s;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &__center {
+      flex-grow: 1;
+      padding: 0 13px;
+    }
+
+    &__right {
+      transition: 0.5s;
+    }
+  }
+
+  &.collapsed {
+    .word__header {
+      &__left {
+        img {
+          height: 18px;
+        }
+      }
+
+      &__center {
+        font-size: 32px;
+      }
+
+      &__right {
+        transform: scale(-1);
+        transition: 0.5s;
+      }
+    }
+  }
+
+  &__body {
+    margin-top: 14px;
+    padding-left: 20px;
+    border-top: 1px solid #eaeaeb;
+    animation: fade_in_show 0.5s;
+
+    &__item {
+      padding: 14px 0;
+
+      &__header {
+        font-size: 14px;
+
+        span {
+          font-size: 12px;
+          color: #bebebe;
+        }
+      }
+
+      &__body {
+        color: #bebebe;
+        font-size: 12px;
+
+        &:before {
+          content: "-";
+        }
+      }
+    }
+  }
+
+  &__footer {
+    color: #bebebe;
+    padding-left: 22px;
+    animation: fade_in_show 0.5s;
+  }
+}
+
+[nz-radio] {
+  display: block;
+}

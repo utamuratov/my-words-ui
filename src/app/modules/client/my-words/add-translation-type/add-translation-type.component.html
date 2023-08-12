@@ -1,0 +1,34 @@
+<mw-header title="Tarjima tipini tanlang"></mw-header>
+
+<div class="inner-content">
+  <nz-radio-group>
+    <label nz-radio nzValue="A">Tarjima</label>
+    <label nz-radio nzValue="B">Ma’nosi</label>
+    <label nz-radio nzValue="C">Antonim</label>
+    <label nz-radio nzValue="D">Misol gap</label>
+  </nz-radio-group>
+
+  <a class="mt-1" (click)="isVisible = true">
+    <img src="./assets/images/plus-outline.svg" />
+    Yangi tip qo’shish
+  </a>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzWidth="400px"
+  nzTitle="Yangi tip qo'shish"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your username!">
+        <input type="text" nz-input placeholder="Tip" />
+      </nz-form-control>
+    </nz-form-item>
+    <button nz-button nzType="primary" nzBlock>Qo'shish</button>
+  </ng-container>
+  <ng-container *nzModalFooter> </ng-container>
+</nz-modal>

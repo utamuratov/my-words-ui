@@ -1,0 +1,95 @@
+<div class="pb-1">
+  <nz-input-group [nzSuffix]="suffixIconSearch">
+    <input type="text" nz-input placeholder="book ..." />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
+</div>
+<div class="inner-content">
+  <div class="header">
+    <h3>142 so'z</h3>
+    <a
+      nz-popover
+      [nzPopoverContent]="contentTemplate"
+      nzPopoverPlacement="bottom"
+      [(nzPopoverVisible)]="visibleOrderType"
+      nzPopoverTrigger="click"
+    >
+      Tartiblash
+      <img src="./assets/images/order.svg" />
+    </a>
+
+    <ng-template #contentTemplate>
+      <nz-radio-group
+        [(ngModel)]="orderType"
+        (ngModelChange)="changeOrderType($event)"
+      >
+        <label nz-radio nzValue="byDate">Sana bo’yicha</label>
+        <label nz-radio nzValue="byAlphabet">Alfavit bo’yicha</label>
+      </nz-radio-group>
+    </ng-template>
+  </div>
+
+  <div class="body">
+    <div class="mb-1" *ngFor="let data of translationsGrouped">
+      <span class="when">{{ data.when }}</span>
+
+      <div class="words">
+        <div
+          class="word"
+          [ngClass]="{ collapsed: translation.collapsed }"
+          *ngFor="let translation of data.translations"
+        >
+          <div
+            class="word__header"
+            (click)="translation.collapsed = !translation.collapsed"
+          >
+            <div class="word__header__left">
+              <img
+                [src]="
+                  translation.saved
+                    ? './assets/images/saved-filled.svg'
+                    : './assets/images/saved.svg'
+                "
+              />
+            </div>
+            <div class="word__header__center">
+              {{ translation.word }}
+            </div>
+            <div class="word__header__right">
+              <img src="./assets/images/arrow-down.svg" />
+            </div>
+          </div>
+          <div class="word__body" [hidden]="!translation.collapsed">
+            <div
+              class="word__body__item"
+              *ngFor="
+                let wordTranslation of translation.translates;
+                let i = index
+              "
+            >
+              <div class="word__body__item__header">
+                <span>{{ i + 1 }}.</span> {{ wordTranslation }}
+              </div>
+              <div class="word__body__item__body">He reads book</div>
+            </div>
+          </div>
+          <div class="word__footer" *ngIf="!translation.collapsed">
+            {{ translation.translates[0] }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    nz-button
+    nzType="primary"
+    nzShape="circle"
+    class="inner-content__float-btn"
+    routerLink="add"
+  >
+    <i nz-icon nzType="plus"></i>
+  </button>
+</div>

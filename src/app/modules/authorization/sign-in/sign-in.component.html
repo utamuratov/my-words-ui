@@ -1,0 +1,80 @@
+<div nz-row class="h-100vh align-items-center">
+  <div
+    nz-col
+    [nzXs]="{ span: 22, offset: 1 }"
+    [nzSm]="{ span: 14, offset: 5 }"
+    [nzMd]="{ span: 10, offset: 6 }"
+    [nzLg]="{ span: 8, offset: 8 }"
+    [nzXl]="{ span: 6, offset: 9 }"
+    [nzXXl]="{ span: 6, offset: 9 }"
+    class="auth-body"
+  >
+    <div class="logo">
+      <img src="./assets/images/my-words-logo.svg" />
+    </div>
+
+    <nz-alert
+      *ngIf="errorMessage"
+      nzType="error"
+      [nzMessage]="errorMessage"
+      nzShowIcon
+      class="mb-1"
+    ></nz-alert>
+
+    <form
+      nz-form
+      [formGroup]="form"
+      class="login-form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your phone number!">
+          <nz-input-group nzPrefixIcon="phone">
+            <input
+              type="text"
+              nz-input
+              formControlName="phoneNumber"
+              placeholder="Phone"
+              prefix="+998"
+              mask="(00) 000 00 00"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="password"
+              nz-input
+              formControlName="password"
+              placeholder="Password"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <!-- TODO: REMOVE OR IMPLEMENT -->
+      <!-- <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="remember">
+            <span>Remember me</span>
+          </label>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a class="login-form-forgot">Forgot password</a>
+        </div>
+      </div> -->
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+        nzSize="large"
+        [nzLoading]="loading"
+      >
+        Log in
+      </button>
+      Or
+      <a routerLink="../sign-up">register now!</a>
+    </form>
+  </div>
+</div>
