@@ -1,4 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+} from '@angular/core';
+import { WordService } from '../../services/word.service';
+import { GroupModel } from '../../models/group.model';
+import { GroupService } from '../../services/group.service';
+import { Observable } from 'rxjs';
+import { WordResponse } from '../../models/word.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 type OrderType = 'byDate' | 'byAlphabet';
 @Component({
@@ -8,6 +19,36 @@ type OrderType = 'byDate' | 'byAlphabet';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WordListComponent implements OnInit {
+  /**
+   *
+   */
+  groupId?: number;
+
+  /**
+   *
+   */
+  showCollapsedGroup = false;
+
+  /**
+   *
+   */
+  $group = inject(GroupService);
+
+  /**
+   *
+   */
+  $word = inject(WordService);
+
+  /**
+   *
+   */
+  group$ = this.$group.groups();
+
+  /**
+   *
+   */
+  word$!: Observable<WordResponse[]>;
+
   translationsGrouped = [
     {
       when: 'Bugun',
@@ -154,11 +195,42 @@ export class WordListComponent implements OnInit {
 
   visibleOrderType = false;
   orderType: OrderType = 'byDate';
-  constructor() {}
 
-  ngOnInit(): void {}
+  /**
+   *
+   * @param route
+   */
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      const groupId = +params['groupId'];
+      if (isFinite(groupId)) {
+        this.groupId = groupId;
+        this.word$ = this.$word.getByGroupId(groupId);
+        return;
+      }
+      this.word$ = this.$word.getAll();
+    });
+  }
 
   changeOrderType(orderType: OrderType) {
     // TODO Logic
+  }
+
+  /**
+   *
+   * @param group
+   */
+  chooseGroup(group: GroupModel) {
+    this.router.navigate(['my-words', group.id]);
+  }
+
+  /**
+   *
+   */
+  chooseAll() {
+    this.groupId = undefined;
+    this.router.navigate(['my-words']);
   }
 }

@@ -41,6 +41,11 @@ export class SignUpComponent implements OnInit {
     confirm: ['', [this.confirmValidator]],
   });
 
+  /**
+   *
+   */
+  loading = false;
+
   constructor(
     private fb: FormBuilder,
     private $auth: AuthService,
@@ -52,9 +57,12 @@ export class SignUpComponent implements OnInit {
 
   submitForm(): void {
     if (this.form.valid) {
+      this.loading = true;
       const requestModel = this.form.getRawValue();
       addPrefixToPhoneNumber(requestModel);
       this.$auth.register(requestModel).subscribe((w) => {
+        this.loading = false;
+
         if (w.status) {
           this.router.navigate(['../sign-in'], { relativeTo: this.route });
         }

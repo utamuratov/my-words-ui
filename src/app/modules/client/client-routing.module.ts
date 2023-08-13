@@ -6,8 +6,13 @@ const routes: Routes = [
   {
     path: '',
     component: ClientComponent,
-
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'group' },
+      {
+        path: 'group',
+        loadComponent: () =>
+          import('./group/group.component').then((m) => m.GroupComponent),
+      },
       {
         path: 'my-words',
         loadChildren: () =>

@@ -15,8 +15,11 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { AddTranslationTypeComponent } from './add-translation-type/add-translation-type.component';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { SharedModule } from '../shared/shared.module';
     MyWordsRoutingModule,
 
     FormsModule,
+    ReactiveFormsModule,
 
     SharedModule,
 
@@ -39,9 +43,12 @@ import { SharedModule } from '../shared/shared.module';
     NzLayoutModule,
     NzButtonModule,
     NzFormModule,
+    NzSelectModule,
     NzRadioModule,
     NzModalModule,
     NzPopoverModule,
+    NzCollapseModule,
+    NzTagModule,
   ],
 })
 export class MyWordsModule {}

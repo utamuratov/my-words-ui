@@ -2,16 +2,43 @@
 
 <div class="inner-content">
   <div class="flex-grow-1">
-    <form nz-form nzLayout="vertical">
+    <form [formGroup]="form" nz-form nzLayout="vertical">
       <nz-form-item>
         <nz-form-label [nzSpan]="24">New word</nz-form-label>
 
         <nz-form-control [nzSpan]="24" nzErrorTip="Fill the input">
-          <input type="text" nz-input />
+          <input type="text" nz-input formControlName="newWord" />
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label [nzSpan]="24">Tarjima</nz-form-label>
+
+        <nz-form-control [nzSpan]="24" nzErrorTip="Fill the input">
+          <textarea
+            nz-input
+            placeholder="Tarjima ..."
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            formControlName="translation"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24">Tarjima</nz-form-label>
+
+        <nz-form-control [nzSpan]="24" nzErrorTip="Fill the input">
+          <nz-select formControlName="groupId">
+            <nz-option
+              [nzValue]="group.id"
+              [nzLabel]="group.name"
+              *ngFor="let group of group$ | async"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- <nz-form-item>
         <nz-form-label [nzSpan]="7">Tarjima</nz-form-label>
         <nz-form-control [nzSpan]="24" nzErrorTip="Fill the input">
           <nz-input-group nzSearch [nzAddOnAfter]="suffixMinusIconButton">
@@ -39,11 +66,17 @@
             </button>
           </ng-template>
         </nz-form-control>
-      </nz-form-item>
+      </nz-form-item> -->
     </form>
   </div>
   <div>
-    <button nz-button nzBlock nzSize="large" [nzType]="'primary'">
+    <button
+      nz-button
+      nzBlock
+      nzSize="large"
+      [nzType]="'primary'"
+      (click)="submit()"
+    >
       Saqlash
     </button>
   </div>

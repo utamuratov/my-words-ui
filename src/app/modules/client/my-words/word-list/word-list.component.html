@@ -1,3 +1,19 @@
+<div class="mb-1">
+  <nz-tag
+    class="tag"
+    [ngClass]="{ active: groupId === undefined }"
+    (click)="chooseAll()"
+    >Barchasi</nz-tag
+  >
+  <nz-tag
+    class="tag"
+    [ngClass]="{ active: group.id === groupId }"
+    (click)="chooseGroup(group)"
+    *ngFor="let group of group$ | async"
+    >{{ group.name }}</nz-tag
+  >
+</div>
+
 <div class="pb-1">
   <nz-input-group [nzSuffix]="suffixIconSearch">
     <input type="text" nz-input placeholder="book ..." />
@@ -6,9 +22,10 @@
     <i nz-icon nzType="search"></i>
   </ng-template>
 </div>
+
 <div class="inner-content">
-  <div class="header">
-    <h3>142 so'z</h3>
+  <div class="d-flex">
+    <h3 class="flex-grow-1">{{ (word$ | async)?.length || 0 }} so'z</h3>
     <a
       nz-popover
       [nzPopoverContent]="contentTemplate"
@@ -32,6 +49,33 @@
   </div>
 
   <div class="body">
+    <div class="words">
+      <div class="word" *ngFor="let word of word$ | async">
+        <div class="word__header">
+          <div class="word__header__left">
+            <img
+              [src]="
+                word.saved
+                  ? './assets/images/saved-filled.svg'
+                  : './assets/images/saved.svg'
+              "
+            />
+          </div>
+          <div class="word__header__center">
+            {{ word.newWord }}
+          </div>
+          <!-- <div class="word__header__right">
+            <img src="./assets/images/arrow-down.svg" />
+          </div> -->
+        </div>
+        <div class="word__footer">
+          {{ word.translation }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="body">
     <div class="mb-1" *ngFor="let data of translationsGrouped">
       <span class="when">{{ data.when }}</span>
 
@@ -81,14 +125,16 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <button
     nz-button
     nzType="primary"
     nzShape="circle"
     class="inner-content__float-btn"
-    routerLink="add"
+    [routerLink]="
+      groupId ? ['/my-words', 'add', groupId] : ['/my-words', 'add']
+    "
   >
     <i nz-icon nzType="plus"></i>
   </button>

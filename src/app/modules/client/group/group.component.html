@@ -1,0 +1,71 @@
+<mw-header title="Guruhlar"></mw-header>
+
+<div class="inner-content">
+  <div nz-row [nzGutter]="[16, 16]">
+    <div
+      class="position-relative"
+      nz-col
+      [nzXs]="24"
+      [nzSm]="24"
+      [nzMd]="12"
+      [nzXXl]="12"
+      *ngFor="let group of group$ | async"
+    >
+      <div class="group" [routerLink]="['../my-words', group.id]">
+        <span>
+          {{ group.name }}
+        </span>
+      </div>
+      <div class="position-absolute" style="top: 10px; right: 10px">
+        <button nz-button nzType="link" (click)="edit(group)">
+          <span nz-icon nzType="edit" nzTheme="outline"></span>
+        </button>
+        <button
+          nz-button
+          nzType="link"
+          nz-popconfirm
+          nzPopconfirmTitle="Rostdan ham guruhni o`chirmoqchimisiz?"
+          (nzOnConfirm)="delete(group.id)"
+          [nzOkText]="'Ha'"
+          [nzCancelText]="'Yo`q'"
+          nzPopconfirmPlacement="bottom"
+        >
+          <span nz-icon nzType="delete" nzTheme="outline"></span>
+        </button>
+      </div>
+    </div>
+    <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzXXl]="12">
+      <div class="group" (click)="add()">
+        <span nz-icon nzType="plus" nzTheme="outline"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal
+  [(nzVisible)]="visibleModal"
+  [nzWidth]="300"
+  [nzTitle]="editingGroup ? 'Guruhni tahrirlash' : 'Guruh qo`shish'"
+  (nzOnCancel)="closeModal()"
+  (nzOnOk)="submit()"
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="form" nz-form nzLayout="vertical" (ngSubmit)="submit()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzRequired>Group name</nz-form-label>
+        <nz-form-control
+          [nzSpan]="24"
+          nzHasFeedback
+          [nzErrorTip]="userErrorTpl"
+        >
+          <input nz-input formControlName="name" placeholder="Group name" />
+          <ng-template #userErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')"
+              >Please input group name!</ng-container
+            >
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
