@@ -1,17 +1,37 @@
-.group {
-    border-radius: 5px;
-    border: 1px solid #f0f0f0;
-    padding: 10px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
-    .active {
-        background-color: #3445df;
-        border-color: #3445df;
-        color: white;
+.group-item {
+  &:hover {
+    .group {
+      background-color: #3445df;
+      border-color: #3445df;
+      color: white;
     }
+
+    button {
+      color: white !important;
+    }
+  }
+}
+
+.group {
+  border-radius: 5px;
+  border: 1px solid #f0f0f0;
+  padding: 10px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: 1s;
+
+  &__plus {
+    box-shadow: none;
+    border-style: dashed;
+    border-width: 2px;
+    background: #f0f0f033;
+
+    &:hover {
+      border-color: #3445df;
+    }
+  }
 }

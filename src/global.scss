@@ -16,6 +16,12 @@
   }
 }
 
+.overflow {
+  &-auto {
+    overflow: auto;
+  }
+}
+
 .position {
   &-relative {
     position: relative;

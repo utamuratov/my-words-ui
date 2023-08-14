@@ -1,9 +1,9 @@
-<mw-header title="Guruhlar"></mw-header>
+<h3><span nz-icon nzType="home" nzTheme="outline"></span> So'zlar oilasi</h3>
 
 <div class="inner-content">
-  <div nz-row [nzGutter]="[16, 16]">
+  <div nz-row [nzGutter]="[16, 16]" class="overflow-auto">
     <div
-      class="position-relative"
+      class="position-relative group-item"
       nz-col
       [nzXs]="24"
       [nzSm]="24"
@@ -11,10 +11,14 @@
       [nzXXl]="12"
       *ngFor="let group of group$ | async"
     >
-      <div class="group" [routerLink]="['../my-words', group.id]">
-        <span>
-          {{ group.name }}
-        </span>
+      <div
+        class="group"
+        [routerLink]="['../my-words', group.id]"
+        [nzTooltipTitle]="group.name + ' ga o\'tish'"
+        nzTooltipPlacement="top"
+        nz-tooltip
+      >
+        <span> {{ group.name }} ({{ group.wordsCount }}) </span>
       </div>
       <div class="position-absolute" style="top: 10px; right: 10px">
         <button nz-button nzType="link" (click)="edit(group)">
@@ -35,7 +39,13 @@
       </div>
     </div>
     <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzXXl]="12">
-      <div class="group" (click)="add()">
+      <div
+        class="group group__plus"
+        (click)="add()"
+        nzTooltipTitle="Oila qo'shish"
+        nzTooltipPlacement="top"
+        nz-tooltip
+      >
         <span nz-icon nzType="plus" nzTheme="outline"></span>
       </div>
     </div>
@@ -48,6 +58,8 @@
   [nzTitle]="editingGroup ? 'Guruhni tahrirlash' : 'Guruh qo`shish'"
   (nzOnCancel)="closeModal()"
   (nzOnOk)="submit()"
+  [nzOkText]="'Saqlash'"
+  [nzCancelText]="'Bekor qilish'"
 >
   <ng-container *nzModalContent>
     <form [formGroup]="form" nz-form nzLayout="vertical" (ngSubmit)="submit()">

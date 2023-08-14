@@ -20,6 +20,7 @@ import { markAsDirty } from 'src/app/core/utilit';
 import { Observable } from 'rxjs';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RouterLink } from '@angular/router';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-group',
@@ -39,6 +40,7 @@ import { RouterLink } from '@angular/router';
     NzFormModule,
     NzInputModule,
     NzPopconfirmModule,
+    NzToolTipModule,
   ],
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.less'],

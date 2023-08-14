@@ -45,7 +45,7 @@ export class SignInComponent implements OnInit {
 
         if (w.status) {
           localStorage.setItem(Constants.ACCESS_TOKEN, w.data.token);
-          this.router.navigate(['/my-words']);
+          this.router.navigate(['/']);
         } else {
           this.errorMessage = 'Telefon nomer yoki parol noto`g`ri';
         }

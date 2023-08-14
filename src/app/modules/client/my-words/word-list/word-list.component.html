@@ -1,3 +1,5 @@
+<mw-header title="My words"></mw-header>
+
 <div class="mb-1">
   <nz-tag
     class="tag"
@@ -10,7 +12,7 @@
     [ngClass]="{ active: group.id === groupId }"
     (click)="chooseGroup(group)"
     *ngFor="let group of group$ | async"
-    >{{ group.name }}</nz-tag
+    >{{ group.name }} ({{ group.wordsCount }})</nz-tag
   >
 </div>
 
@@ -25,7 +27,7 @@
 
 <div class="inner-content">
   <div class="d-flex">
-    <h3 class="flex-grow-1">{{ (word$ | async)?.length || 0 }} so'z</h3>
+    <h3 class="flex-grow-1">{{ (word$ | async)?.length || 0 }} ta so'z</h3>
     <a
       nz-popover
       [nzPopoverContent]="contentTemplate"
