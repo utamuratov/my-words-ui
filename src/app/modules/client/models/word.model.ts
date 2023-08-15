@@ -2,7 +2,7 @@ import { Id } from 'src/app/core/id.model';
 
 export interface WordResponse extends Id, WordRequest {
   //   for ui
-  collapsed?: boolean;
+  visible?: boolean;
   saved?: boolean;
 }
 

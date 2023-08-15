@@ -14,7 +14,6 @@ const routes: Routes = [
       { path: 'add', component: AddEditWordComponent },
       { path: 'edit/:id', component: AddEditWordComponent },
       { path: 'type', component: AddTranslationTypeComponent },
-      { path: 'edit/:id/:groupId', component: AddEditWordComponent },
       { path: 'add/:groupId', component: AddEditWordComponent },
       { path: ':groupId', component: WordListComponent },
     ],

@@ -1,7 +1,25 @@
-<h3><span nz-icon nzType="home" nzTheme="outline"></span> So'zlar oilasi</h3>
+<h3><span nz-icon nzType="home" nzTheme="outline"></span> Mening guruhlarim</h3>
 
 <div class="inner-content">
   <div nz-row [nzGutter]="[16, 16]" class="overflow-auto">
+    <div
+      class="group-item"
+      nz-col
+      [nzXs]="24"
+      [nzSm]="24"
+      [nzMd]="12"
+      [nzXXl]="12"
+    >
+      <div
+        class="group"
+        [routerLink]="['../my-words']"
+        [nzTooltipTitle]="'Barchasiga o\'tish'"
+        nzTooltipPlacement="top"
+        nz-tooltip
+      >
+        <span> {{ "Barchasi" }} ({{ group$ | async | countWords }}) </span>
+      </div>
+    </div>
     <div
       class="position-relative group-item"
       nz-col
@@ -20,18 +38,19 @@
       >
         <span> {{ group.name }} ({{ group.wordsCount }}) </span>
       </div>
-      <div class="position-absolute" style="top: 10px; right: 10px">
+      <div class="position-absolute" style="top: 15px; right: 15px">
         <button nz-button nzType="link" (click)="edit(group)">
           <span nz-icon nzType="edit" nzTheme="outline"></span>
         </button>
         <button
           nz-button
+          nzDanger
           nzType="link"
           nz-popconfirm
-          nzPopconfirmTitle="Rostdan ham guruhni o`chirmoqchimisiz?"
+          nzPopconfirmTitle="Rostdan ham o'chirmoqchimisiz?"
           (nzOnConfirm)="delete(group.id)"
           [nzOkText]="'Ha'"
-          [nzCancelText]="'Yo`q'"
+          [nzCancelText]="'Yo\'q'"
           nzPopconfirmPlacement="bottom"
         >
           <span nz-icon nzType="delete" nzTheme="outline"></span>
@@ -42,7 +61,7 @@
       <div
         class="group group__plus"
         (click)="add()"
-        nzTooltipTitle="Oila qo'shish"
+        nzTooltipTitle="Guruh qo'shish"
         nzTooltipPlacement="top"
         nz-tooltip
       >
@@ -55,7 +74,7 @@
 <nz-modal
   [(nzVisible)]="visibleModal"
   [nzWidth]="300"
-  [nzTitle]="editingGroup ? 'Guruhni tahrirlash' : 'Guruh qo`shish'"
+  [nzTitle]="editingGroup ? 'Guruhni tahrirlash' : 'Guruh qo\'shish'"
   (nzOnCancel)="closeModal()"
   (nzOnOk)="submit()"
   [nzOkText]="'Saqlash'"

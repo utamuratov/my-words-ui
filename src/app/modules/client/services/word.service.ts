@@ -26,4 +26,18 @@ export class WordService {
       .get<WordResponse[]>(`${this.url}/group/${groupId}`)
       .pipe(map((w) => w.data));
   }
+
+  getById(id: number) {
+    return this.$base
+      .get<WordResponse>(`${this.url}/${id}`)
+      .pipe(map((w) => w.data));
+  }
+
+  edit(word: WordRequest, id: number) {
+    return this.$base.put<WordResponse>(`${this.url}/${id}`, word);
+  }
+
+  delete(id: number) {
+    return this.$base.delete(this.url + '/' + id);
+  }
 }

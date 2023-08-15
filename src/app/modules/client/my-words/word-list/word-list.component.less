@@ -27,7 +27,7 @@
 
 .word {
   background-color: #fff;
-  padding: 13px 15px;
+  padding: 0 15px;
   margin-top: 8px;
   font-size: 16px;
   border: 1px solid #e6e9eb;
@@ -38,6 +38,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    padding: 13px 0;
 
     &__center {
       flex-grow: 1;
@@ -47,22 +48,25 @@
     &__right {
       transition: 0.5s;
     }
+
+    &__left {
+      img {
+        height: 18px;
+      }
+    }
+
+    &__right {
+      transform: scale(-1);
+      transition: 0.5s;
+    }
   }
 
   &.collapsed {
     .word__header {
-      &__left {
-        img {
-          height: 18px;
-        }
-      }
-
-      &__center {
-        font-size: 32px;
-      }
+      padding-bottom: 0;
 
       &__right {
-        transform: scale(-1);
+        transform: inherit;
         transition: 0.5s;
       }
     }
@@ -100,7 +104,14 @@
   &__footer {
     color: #bebebe;
     padding-left: 22px;
+    padding-bottom: 13px;
     animation: fade_in_show 0.5s;
+    display: flex;
+    align-items: end;
+
+    span {
+      flex-grow: 1;
+    }
   }
 }
 
@@ -120,5 +131,24 @@
 :host ::ng-deep {
   .inner-content {
     height: calc(100vh - 170px);
+  }
+}
+
+button {
+  span {
+    display: flex;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+
+  &.ordered-active {
+    svg {
+      path {
+        stroke: white;
+        fill: white;
+      }
+    }
   }
 }

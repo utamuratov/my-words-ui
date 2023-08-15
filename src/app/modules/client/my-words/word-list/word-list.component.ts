@@ -3,15 +3,15 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   inject,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { WordService } from '../../services/word.service';
 import { GroupModel } from '../../models/group.model';
 import { GroupService } from '../../services/group.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { WordResponse } from '../../models/word.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
-type OrderType = 'byDate' | 'byAlphabet';
 @Component({
   selector: 'mw-word-list',
   templateUrl: './word-list.component.html',
@@ -47,164 +47,51 @@ export class WordListComponent implements OnInit {
   /**
    *
    */
-  word$!: Observable<WordResponse[]>;
+  filteredWord$!: Observable<WordResponse[]>;
+  private _word$!: Observable<WordResponse[]>;
+  private get word$(): Observable<WordResponse[]> {
+    return this._word$;
+  }
+  private set word$(v: Observable<WordResponse[]>) {
+    this._word$ = v;
+    this.search(this.searchText);
+  }
 
-  translationsGrouped = [
-    {
-      when: 'Bugun',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-          saved: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-      ],
-    },
-    {
-      when: 'Kecha',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-      ],
-    },
-    {
-      when: '07.05.2022',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-      ],
-    },
-    {
-      when: '07.05.2022',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-      ],
-    },
-    {
-      when: '07.05.2022',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-      ],
-    },
-    {
-      when: '07.05.2022',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-      ],
-    },
-    {
-      when: '07.05.2022',
-      translations: [
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: true,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-        {
-          word: 'book',
-          translates: ['kitob', 'daftar'],
-          collapsed: false,
-        },
-      ],
-    },
-  ];
+  /**
+   *
+   */
+  searchText = '';
 
-  visibleOrderType = false;
-  orderType: OrderType = 'byDate';
+  /**
+   *
+   */
+  visible = false;
+
+  /**
+   *
+   */
+  ordered = false;
 
   /**
    *
    * @param route
    */
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {}
 
+  /**
+   *
+   */
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const groupId = +params['groupId'];
+      this.searchText = '';
+      this.visible = false;
+      this.ordered = false;
+
       if (isFinite(groupId)) {
         this.groupId = groupId;
         this.word$ = this.$word.getByGroupId(groupId);
@@ -212,10 +99,6 @@ export class WordListComponent implements OnInit {
       }
       this.word$ = this.$word.getAll();
     });
-  }
-
-  changeOrderType(orderType: OrderType) {
-    // TODO Logic
   }
 
   /**
@@ -232,5 +115,101 @@ export class WordListComponent implements OnInit {
   chooseAll() {
     this.groupId = undefined;
     this.router.navigate(['my-words']);
+  }
+
+  /**
+   *
+   * @param searchText
+   */
+  search(searchText: string) {
+    this.searchText = searchText;
+    this.filteredWord$ = this.word$.pipe(
+      map((words) =>
+        words.filter(
+          (w) =>
+            w.newWord
+              .toLocaleLowerCase()
+              .includes(searchText.toLocaleLowerCase()) ||
+            w.translation
+              .toLocaleLowerCase()
+              .includes(searchText.toLocaleLowerCase())
+        )
+      )
+    );
+  }
+
+  /**
+   *
+   */
+  clearSearch() {
+    this.search('');
+  }
+
+  /**
+   *
+   * @param word
+   * @param words
+   */
+  toggleCollapse(word: WordResponse, words: WordResponse[]) {
+    word.visible = !word.visible;
+    if (word.visible) {
+      if (!words.find((w) => !w.visible)) this.visible = true;
+    } else {
+      if (!words.find((w) => w.visible)) this.visible = false;
+    }
+  }
+
+  /**
+   *
+   */
+  toggleVisibility() {
+    this.visible = !this.visible;
+    this.filteredWord$ = this.filteredWord$.pipe(
+      map((words) =>
+        words.map((w) => {
+          w.visible = this.visible;
+          return w;
+        })
+      )
+    );
+  }
+
+  /**
+   *
+   * @returns
+   */
+  toggleOrder() {
+    this.ordered = !this.ordered;
+    if (this.ordered) {
+      this.filteredWord$ = this.filteredWord$.pipe(
+        map((words) => words.sort((a, b) => a.newWord.localeCompare(b.newWord)))
+      );
+      return;
+    }
+
+    this.search(this.searchText);
+  }
+
+  /**
+   *
+   * @param id
+   */
+  edit(id: number) {
+    this.router.navigate(['my-words', 'edit', id]);
+  }
+
+  /**
+   *
+   * @param id
+   */
+  delete(id: number) {
+    this.$word.delete(id).subscribe((w) => {
+      if (w.status) {
+        this.word$ = this.word$.pipe(
+          map((words) => words.filter((w) => w.id !== id))
+        );
+        this.cd.markForCheck();
+      }
+    });
   }
 }

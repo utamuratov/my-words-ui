@@ -16,6 +16,12 @@
   }
 }
 
+.gap {
+  &-1 {
+    gap: 1em;
+  }
+}
+
 .overflow {
   &-auto {
     overflow: auto;

@@ -21,6 +21,7 @@ import { Observable } from 'rxjs';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RouterLink } from '@angular/router';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { CountWordsPipe } from './pipes/count-words.pipe';
 
 @Component({
   selector: 'app-group',
@@ -32,6 +33,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     RouterLink,
     ReactiveFormsModule,
     SharedModule,
+    CountWordsPipe,
 
     NzGridModule,
     NzButtonModule,

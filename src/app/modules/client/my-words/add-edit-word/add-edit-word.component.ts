@@ -41,6 +41,11 @@ export class AddEditWordComponent implements OnInit {
   /**
    *
    */
+  id = +this.route.snapshot.params['id'];
+
+  /**
+   *
+   */
   form = this.fb.nonNullable.group({
     newWord: ['', [Validators.required]],
     translation: ['', [Validators.required]],
@@ -53,7 +58,15 @@ export class AddEditWordComponent implements OnInit {
     private location: Location
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (isFinite(this.id)) {
+      this.$word.getById(this.id).subscribe((w) => {
+        this.form.controls.newWord.setValue(w.newWord);
+        this.form.controls.translation.setValue(w.translation);
+        this.form.controls.groupId.setValue(w.groupId);
+      });
+    }
+  }
 
   submit() {
     if (this.form.invalid) {
@@ -62,6 +75,14 @@ export class AddEditWordComponent implements OnInit {
     }
 
     const request = this.form.getRawValue();
+    if (isFinite(this.id)) {
+      this.$word.edit(request, this.id).subscribe((w) => {
+        if (w.status) {
+          this.location.back();
+        }
+      });
+      return;
+    }
     this.$word.add(request).subscribe((w) => {
       if (w.status) {
         this.location.back();

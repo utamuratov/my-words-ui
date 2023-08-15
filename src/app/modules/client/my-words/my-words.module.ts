@@ -20,6 +20,8 @@ import { SharedModule } from '../shared/shared.module';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzPopoverModule,
     NzCollapseModule,
     NzTagModule,
+    NzPopconfirmModule,
+    NzToolTipModule,
   ],
 })
 export class MyWordsModule {}
