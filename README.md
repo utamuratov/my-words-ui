@@ -5,3 +5,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## DEPLOY TO GITHUB PAGES
 
 `ng build --output-path docs --base-href /my-words-ui/`
+`git add .`
+`git commit -a -m '.'`
+`git push origin gh-pages`
