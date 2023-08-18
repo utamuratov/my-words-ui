@@ -40,4 +40,8 @@ export class WordService {
   delete(id: number) {
     return this.$base.delete(this.url + '/' + id);
   }
+
+  toggleIsSaved(wordId: number) {
+    return this.$base.put(this.url + '/save/' + wordId);
+  }
 }
