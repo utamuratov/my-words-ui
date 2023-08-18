@@ -5,9 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
-import { WordService } from '../services/word.service';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { SharedModule } from '../shared/shared.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -22,6 +20,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RouterLink } from '@angular/router';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { CountWordsPipe } from './pipes/count-words.pipe';
+import { MenuComponent } from '../shared/components/menu/menu.component';
+import { HeaderComponent } from '../shared/components/header/header.component';
 
 @Component({
   selector: 'app-group',
@@ -32,8 +32,9 @@ import { CountWordsPipe } from './pipes/count-words.pipe';
     AsyncPipe,
     RouterLink,
     ReactiveFormsModule,
-    SharedModule,
+    HeaderComponent,
     CountWordsPipe,
+    MenuComponent,
 
     NzGridModule,
     NzButtonModule,

@@ -1,6 +1,10 @@
-<div class="d-flex align-items-center pb-1">
-  <a (click)="back()" title="Orqaga"
-    ><img src="./assets/images/arrow-left.svg" class="mr-1"
-  /></a>
-  <h3 class="title">{{ title }}</h3>
+<div class="d-flex pb-1">
+  <div class="d-flex align-items-center flex-grow-1">
+    <a (click)="back()" title="Orqaga"
+      ><img src="./assets/images/arrow-left.svg" class="mr-1"
+    /></a>
+    <h3 class="title">{{ title }}</h3>
+  </div>
+
+  <app-menu></app-menu>
 </div>
