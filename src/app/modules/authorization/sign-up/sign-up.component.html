@@ -35,12 +35,12 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzRequired>Phone number</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzRequired>Telefon nomer</nz-form-label>
         <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="phoneNumber">
           <input
             nz-input
             formControlName="phoneNumber"
-            placeholder="Phone"
+            placeholder="+998 "
             type="text"
             prefix="+998"
             mask="(00) 000 00 00"
@@ -53,7 +53,7 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzRequired>Password</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzRequired>Parol</nz-form-label>
         <nz-form-control
           [nzSpan]="24"
           nzHasFeedback
@@ -68,7 +68,9 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzRequired>Confirm Password</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzRequired
+          >Parolni tasdiqlsh</nz-form-label
+        >
         <nz-form-control
           [nzSpan]="24"
           nzHasFeedback
@@ -78,7 +80,7 @@
             nz-input
             type="password"
             formControlName="confirm"
-            placeholder="confirm your password"
+            placeholder="Parolingizni qayta kiriting"
           />
           <ng-template #passwordErrorTpl let-control>
             <ng-container *ngIf="control.hasError('required')"
@@ -97,9 +99,12 @@
         nzBlock
         [disabled]="!form.valid"
         [nzLoading]="loading"
+        class="mb-1"
       >
-        Submit
+        Ro'yxatdan o'tish
       </button>
+      Mavjud akkount orqali
+      <a routerLink="../sign-in">kirish</a>
     </form>
   </div>
 </div>

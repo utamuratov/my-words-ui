@@ -6,11 +6,14 @@ import {
   Input,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'mw-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
+  standalone: true,
+  imports: [MenuComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {

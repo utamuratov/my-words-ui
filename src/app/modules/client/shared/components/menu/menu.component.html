@@ -1,0 +1,32 @@
+<button
+  nz-button
+  nzType="link"
+  nz-popover
+  [(nzPopoverVisible)]="visible"
+  nzPopoverTrigger="click"
+  [nzPopoverContent]="contentTemplate"
+  nzShape="circle"
+  class="button-menu"
+>
+  <span nz-icon nzType="menu" nzTheme="outline"></span>
+</button>
+<ng-template #contentTemplate>
+  <ul class="menu">
+    <li>
+      <a [routerLink]="['/']" (click)="close()"
+        ><span nz-icon nzType="group" nzTheme="outline"></span> Mening
+        guruhlarim</a
+      >
+    </li>
+    <li>
+      <a [routerLink]="['/my-words']" (click)="close()"
+        ><span nz-icon nzType="file-word" nzTheme="outline"></span> My words</a
+      >
+    </li>
+    <li>
+      <a (click)="logout()"
+        ><span nz-icon nzType="logout" nzTheme="outline"></span> Chiqish</a
+      >
+    </li>
+  </ul>
+</ng-template>
