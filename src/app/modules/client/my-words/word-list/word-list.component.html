@@ -56,12 +56,32 @@
     </h3>
 
     <div class="d-flex" style="gap: 5px">
+      <button
+        nz-button
+        [nzType]="saved ? 'primary' : 'link'"
+        [ngClass]="{ 'ordered-active': saved }"
+        (click)="filterSavedWords()"
+      >
+        <svg
+          width="9"
+          height="13"
+          viewBox="0 0 9 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.49121 1.33423H7.91309V11.7736L5.30319 9.16368C4.97125 8.83173 4.43305 8.83173 4.10111 9.16367L1.49121 11.7736V1.33423Z"
+            stroke="#3445DF"
+            stroke-width="1.5"
+          />
+        </svg>
+      </button>
       <!-- SORT -->
       <button
         nz-button
         [nzType]="ordered ? 'primary' : 'link'"
         [ngClass]="{ 'ordered-active': ordered }"
-        (click)="toggleOrder()"
+        (click)="sort()"
       >
         <svg
           width="14"
@@ -136,8 +156,10 @@
         <div class="word__header" (click)="toggleCollapse(word, words)">
           <div class="word__header__left">
             <img
+              class="pointer"
+              (click)="toggleIsSaved(word, $event)"
               [src]="
-                word.saved
+                word.isSaved
                   ? './assets/images/saved-filled.svg'
                   : './assets/images/saved.svg'
               "

@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
 import { Constants } from './core/constants';
 import { HeaderInterceptor } from './core/header.interceptor';
+import { HanlerErrorInterceptor } from './core/handler-error.interceptor';
 
 registerLocaleData(en);
 
@@ -43,6 +44,11 @@ export function tokenGetter() {
     { provide: NZ_I18N, useValue: en_US },
     { provide: DITokens.ENDPOINT, useValue: environment.endpoint },
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HanlerErrorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

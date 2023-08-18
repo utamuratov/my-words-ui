@@ -74,6 +74,11 @@ export class WordListComponent implements OnInit {
 
   /**
    *
+   */
+  saved = false;
+
+  /**
+   *
    * @param route
    */
   constructor(
@@ -178,11 +183,28 @@ export class WordListComponent implements OnInit {
    *
    * @returns
    */
-  toggleOrder() {
+  sort() {
     this.ordered = !this.ordered;
     if (this.ordered) {
       this.filteredWord$ = this.filteredWord$.pipe(
         map((words) => words.sort((a, b) => a.newWord.localeCompare(b.newWord)))
+      );
+      return;
+    }
+
+    this.search(this.searchText);
+  }
+
+  /**
+   *
+   * @returns
+   */
+  filterSavedWords() {
+    this.saved = !this.saved;
+
+    if (this.saved) {
+      this.filteredWord$ = this.filteredWord$.pipe(
+        map((words) => words.filter((w) => w.isSaved))
       );
       return;
     }
@@ -211,5 +233,18 @@ export class WordListComponent implements OnInit {
         this.cd.markForCheck();
       }
     });
+  }
+
+  /**
+   *
+   * @param word
+   * @param e
+   */
+  toggleIsSaved(word: WordResponse, e: Event) {
+    this.$word.toggleIsSaved(word.id).subscribe((w) => {
+      this.cd.markForCheck();
+      word.isSaved = !word.isSaved;
+    });
+    e.stopPropagation();
   }
 }
