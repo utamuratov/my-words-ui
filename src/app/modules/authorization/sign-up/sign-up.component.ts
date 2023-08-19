@@ -46,6 +46,11 @@ export class SignUpComponent implements OnInit {
    */
   loading = false;
 
+  /**
+   *
+   */
+  errorMessage?: string;
+
   constructor(
     private fb: FormBuilder,
     private $auth: AuthService,
@@ -56,6 +61,8 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {}
 
   submitForm(): void {
+    this.errorMessage = undefined;
+
     if (this.form.valid) {
       this.loading = true;
       const requestModel = this.form.getRawValue();
@@ -65,6 +72,8 @@ export class SignUpComponent implements OnInit {
 
         if (w.status) {
           this.router.navigate(['../sign-in'], { relativeTo: this.route });
+        } else {
+          if (typeof w.error === 'string') this.errorMessage = w.error;
         }
       });
     } else {

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MyWordsRoutingModule } from './my-words-routing.module';
-import { MyWordsComponent } from './my-words.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -25,7 +24,6 @@ import { HeaderComponent } from '../shared/components/header/header.component';
 
 @NgModule({
   declarations: [
-    MyWordsComponent,
     AddEditWordComponent,
     WordListComponent,
     AddTranslationTypeComponent,

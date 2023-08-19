@@ -8,9 +8,8 @@ describe('WordListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WordListComponent ]
-    })
-    .compileComponents();
+      declarations: [WordListComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +20,10 @@ describe('WordListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('#clearSearch() should set #searchText to empty string', () => {
+    component.clearSearch();
+    expect(component.searchText).toBe('');
   });
 });

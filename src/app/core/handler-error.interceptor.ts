@@ -10,6 +10,8 @@ import {
 import { Observable, catchError, throwError } from 'rxjs';
 import { AuthService } from '../modules/authorization/service/auth.service';
 
+export type ErrorType = string | object;
+
 @Injectable()
 export class HanlerErrorInterceptor implements HttpInterceptor {
   intercept(
@@ -22,8 +24,17 @@ export class HanlerErrorInterceptor implements HttpInterceptor {
         if (error.status === HttpStatusCode.Unauthorized) {
           inject(AuthService).logout();
         }
-        return throwError(() => error);
+        return throwError(() => this.makeError(error));
       })
     );
+  }
+
+  makeError(error: HttpErrorResponse): ErrorType {
+    const errors = error.error.errors;
+    if (errors?.error && typeof errors.error === 'string') {
+      return errors.error;
+    }
+
+    return errors;
   }
 }

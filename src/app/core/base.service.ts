@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { Observable, catchError, of, shareReplay } from 'rxjs';
 import { BaseResponse } from './base-response.model';
+import { ErrorType } from './handler-error.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,8 @@ export class BaseService {
    */
   private catchError<T>() {
     return catchError<BaseResponse<T>, Observable<BaseResponse<T>>>(
-      (errors: HttpErrorResponse) => {
-        return of({ errors: errors.error, status: false } as BaseResponse<T>);
+      (error: ErrorType) => {
+        return of({ error, status: false } as BaseResponse<T>);
       }
     );
   }
