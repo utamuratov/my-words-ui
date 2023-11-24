@@ -1,31 +1,11 @@
-# syntax=docker/dockerfile:1.4
-
-FROM --platform=$BUILDPLATFORM node:18-bullseye-slim as builder
-
-RUN mkdir /project
-WORKDIR /project
-
-RUN npm install -g @angular/cli@16.1.0
-
+### STAGE 1: Build ###
+FROM node:18-alpine AS builder
+WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
-RUN npm ci
-
+RUN npm install
 COPY . .
-CMD ["ng", "serve", "--host", "0.0.0.0"]
-
-FROM builder as dev-envs
-
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
-
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+RUN npm run build
+### STAGE 2: Run ###
+FROM nginx:1.17.1-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /usr/src/app/dist/my-words-ui /usr/share/nginx/html

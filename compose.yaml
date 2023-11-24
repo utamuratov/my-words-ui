@@ -1,10 +1,12 @@
 services:
   web:
     build:
-      context: ./
-      target: builder
+      context: .
+    
     ports:
-      - 4210:4210
-    volumes:
-      - ./:/project
-      - /project/node_modules
+      - 4200:80
+
+    restart: always
+    # volumes:
+    #   - ./:/usr/src/app
+    #   - /usr/src/app/node_modules
