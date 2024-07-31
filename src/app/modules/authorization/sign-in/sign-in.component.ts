@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { Constants } from 'src/app/core/constants';
@@ -32,7 +32,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private $auth: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   submitForm(): void {
@@ -41,6 +42,7 @@ export class SignInComponent implements OnInit {
       const requestModel = this.form.getRawValue();
       addPrefixToPhoneNumber(requestModel);
       this.$auth.login(requestModel).subscribe((w) => {
+        this.cdr.markForCheck();
         this.loading = false;
 
         if (w.status) {

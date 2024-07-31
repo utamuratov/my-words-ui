@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -55,7 +55,8 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private $auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {}
@@ -68,6 +69,7 @@ export class SignUpComponent implements OnInit {
       const requestModel = this.form.getRawValue();
       addPrefixToPhoneNumber(requestModel);
       this.$auth.register(requestModel).subscribe((w) => {
+        this.cdr.markForCheck();
         this.loading = false;
 
         if (w.status) {
